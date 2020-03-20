@@ -1,4 +1,4 @@
-<!doctype html>
+<!doctype html class="h-100">
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -10,7 +10,7 @@
     <title>{{ config('app.name') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+   
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -19,11 +19,11 @@
     <!-- Styles -->
   
 </head>
-<body>
+<body class="h-100">
     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
         @csrf
     </form>
-    <div id="app">
+    <div id="app" class="h-100">
         <b-navbar toggleable="sm" type="dark" variant="primary">
             <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
 
@@ -49,9 +49,10 @@
         </b-navbar>
       
 
-        <main class="py-4">
+        <main >
             @yield('content')
         </main>
     </div>
+    <script src="{{ asset('js/app.js') }}" defer></script>
 </body>
 </html>
