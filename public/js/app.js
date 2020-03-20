@@ -1956,11 +1956,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       messages: [],
-      newMessage: ''
+      newMessage: '',
+      contactId: 2
     };
   },
   mounted: function mounted() {
@@ -1970,7 +1973,7 @@ __webpack_require__.r(__webpack_exports__);
     getMessages: function getMessages() {
       var _this = this;
 
-      axios.get('/api/messages').then(function (response) {
+      axios.get("/api/messages?contact_id=".concat(this.contactId)).then(function (response) {
         _this.messages = response.data;
       });
     },
@@ -2020,8 +2023,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['variant'],
+  props: {
+    variant: String,
+    conversation: Object
+  },
   data: function data() {
     return {
       name: 'Juan Lopez',
@@ -2064,12 +2072,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {};
+    return {
+      conversations: []
+    };
   },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    this.getConversations();
+  },
+  methods: {
+    getConversations: function getConversations() {
+      var _this = this;
+
+      axios.get('/api/conversations').then(function (response) {
+        _this.conversations = response.data;
+      });
+    }
   }
 });
 
@@ -75987,11 +76011,12 @@ var render = function() {
         [
           _c("b-img", {
             attrs: {
-              src: "https://picsum.photos/125/125/?image=58",
+              rounded: "circle",
+              blank: "",
+              "blank-color": "#ccc",
               width: "60",
               height: "60",
-              rounded: "circle",
-              alt: "Circle image"
+              alt: "placeholder"
             }
           }),
           _vm._v(" "),
@@ -76045,11 +76070,12 @@ var render = function() {
             [
               _c("b-img", {
                 attrs: {
-                  src: "https://picsum.photos/125/125/?image=58",
+                  rounded: "circle",
+                  blank: "",
+                  "blank-color": "#ccc",
                   width: "60",
                   height: "60",
-                  rounded: "circle",
-                  alt: "Circle image"
+                  alt: "placeholder"
                 }
               })
             ],
@@ -76063,10 +76089,12 @@ var render = function() {
               attrs: { cols: "6", "align-self": "center" }
             },
             [
-              _c("p", { staticClass: "mb-1" }, [_vm._v(_vm._s(_vm.name))]),
+              _c("p", { staticClass: "mb-1" }, [
+                _vm._v(_vm._s(_vm.conversation.contact_name))
+              ]),
               _vm._v(" "),
               _c("p", { staticClass: "text-muted small mb-0" }, [
-                _vm._v(_vm._s(_vm.lastMessage))
+                _vm._v(_vm._s(_vm.conversation.last_message))
               ])
             ]
           ),
@@ -76076,7 +76104,7 @@ var render = function() {
             { staticClass: "d-none d-md-block", attrs: { cols: "3" } },
             [
               _c("p", { staticClass: "text-muted small " }, [
-                _vm._v(_vm._s(_vm.lastTime))
+                _vm._v(_vm._s(_vm.conversation.last_time))
               ])
             ]
           )
@@ -76126,13 +76154,12 @@ var render = function() {
       _vm._v(" "),
       _c(
         "b-list-group",
-        [
-          _c("contact-component", { attrs: { variant: "dark" } }),
-          _vm._v(" "),
-          _c("contact-component", { attrs: { variant: "" } }),
-          _vm._v(" "),
-          _c("contact-component", { attrs: { variant: "secondary" } })
-        ],
+        _vm._l(_vm.conversations, function(conversation) {
+          return _c("contact-component", {
+            key: conversation.id,
+            attrs: { conversation: conversation }
+          })
+        }),
         1
       )
     ],

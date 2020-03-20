@@ -36,7 +36,9 @@
             </b-card>
         </b-col>
         <b-col cols="4" class="d-none d-md-block">
-        <b-img src="https://picsum.photos/125/125/?image=58" width="60" height="60" rounded="circle" alt="Circle image"></b-img>
+             <b-img rounded="circle" blank blank-color="#ccc" width="60" height="60" alt="placeholder"></b-img>
+        <!--<b-img src="https://picsum.photos/125/125/?image=58" width="60" height="60" rounded="circle" alt="Circle image"></b-img>
+        -->
         <p>Usuario Seleccionado</p>
         <hr>
         <b-form-checkbox>
@@ -51,7 +53,8 @@ export default {
         data(){
             return{
                 messages: [],
-                newMessage: ''
+                newMessage: '',
+                contactId: 2
             };
         },
         mounted() {
@@ -60,7 +63,10 @@ export default {
         methods: {
             getMessages()
             {
-                axios.get('/api/messages')
+                
+                
+                
+                axios.get(`/api/messages?contact_id=${this.contactId}`)
                 .then((response) => 
                 {
                     this.messages= response.data;
