@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Message;
 use App\Conversation;
+use App\Events\MessageSent;
 
 class MessageObserver
 {
@@ -19,7 +20,7 @@ class MessageObserver
                         ->where('contact_id', $message->to_id)->first();
         if($conversation){
             $conversation->last_message = "Tu: $message->content";
-            $conversation->last_time = $message->create_at;
+            $conversation->last_time = $message->created_at;
             $conversation->save();
         }
 
@@ -27,9 +28,11 @@ class MessageObserver
                         ->where('contact_id', $message->from_id)->first();
         if($conversation){
             $conversation->last_message = "$conversation->contact_name: $message->content";
-            $conversation->last_time = $message->create_at;
+            $conversation->last_time = $message->created_at;
             $conversation->save();
         }
+
+        event(new MessageSent($message));
     }
 
   

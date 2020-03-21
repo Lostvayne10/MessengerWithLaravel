@@ -4,13 +4,15 @@
             <b-form-input
             class="text-center"
             type="text"
-            placeholder="Buscar Contacto...">
+            placeholder="Buscar Contacto..."
+            >
             </b-form-input>
         </b-form>
         <b-list-group>
             <contact-component v-for="conversation in conversations"
                                 :key="conversation.id"
-                                :conversation="conversation">
+                                :conversation="conversation"
+                                @click.native="SelectConversation(conversation)">
                                 </contact-component>
             <!--
             <contact-component variant="dark"></contact-component>
@@ -38,6 +40,9 @@
                     this.conversations = response.data;
                 });
             },
+            SelectConversation(conversation){
+                this.$emit('conversationSelected', conversation);
+            }
         }
     }
 </script>
