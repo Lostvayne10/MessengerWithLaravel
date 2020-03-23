@@ -19,6 +19,9 @@ Vue.use(IconsPlugin);
 Vue.component('contact-component', 
 require('./components/ContactComponent.vue').default);
 
+Vue.component('status-component', 
+require('./components/StatusComponent.vue').default);
+
 Vue.component('contact-list-component', 
 require('./components/ContactListComponent.vue').default);
 

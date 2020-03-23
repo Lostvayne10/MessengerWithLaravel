@@ -36,12 +36,29 @@
         mounted() {
             this.getConversations();
 
-            Echo.channel(`users.${this.userId}`)
+            Echo.private(`users.${this.userId}`)
 		    .listen('MessageSent', (data) => {
                 const message = data.message;		 
                 message.written_By_Me = false;   	
                 this.addMessage(message);
-		    });
+            });
+            
+            
+            Echo.join(`messenger`)
+		    .here((users) => {
+                console.log(users);
+                users.forEach(user =>
+                this.changeStatus(user, true));
+            })
+            .joining(
+                user => 
+                this.changeStatus(user,true)
+            )
+            .leaving(
+                user =>
+                 this.changeStatus(user,false)
+            );
+            
         },
         methods: {
            changeActiveConversation(conversation){
@@ -54,14 +71,14 @@
                     this.conversations = response.data;
                 });
             },
-           getMessages()
-            {
+           getMessages(){
                 axios.get(`/api/messages?contact_id=${this.selectedConversarion.contact_id}`)
                 .then((response) => 
                 {
                     this.messages= response.data;
                                     });
             },
+
             addMessage(message){
                 
                 const conversation = this.conversations.find(function(conversation){
@@ -82,6 +99,14 @@
                     || this.selectedConversarion.contact_id == message.to_id){
                     this.messages.push(message);
                 }
+            },
+            changeStatus(user, status){
+                
+                const index = this.conversations.findIndex((conversation) => {
+                    return conversation.contact_id == user.id;
+                });
+                if(index >= 0)
+                    this.$set(this.conversations[index], 'online', status );
             }
         }
     }
