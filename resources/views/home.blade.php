@@ -2,7 +2,7 @@
 
 @section('content')
 <b-container fluid style="height: calc(100vh - 56px)">
-    <messenger-component></messenger-component>
+    <messenger-component :user-id="{{ auth()->id() }}"></messenger-component>
 </b-container>
 
 

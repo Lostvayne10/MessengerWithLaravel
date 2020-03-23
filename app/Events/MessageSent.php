@@ -20,10 +20,9 @@ class MessageSent implements ShouldBroadcast
     {
         $this->message = $message;
     }
-
    
     public function broadcastOn()
     {
-        return new Channel('channel-name');
+        return new Channel('example');
     }
 }
