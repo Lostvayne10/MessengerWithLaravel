@@ -39,6 +39,9 @@
                     <b-nav-item href="{{ route('register') }}">Registrar</b-nav-item>
                 @else
                     <b-nav-item-dropdown text=" {{ Auth::user()->name }} " right>
+                        <b-dropdown-item href="{{ route('profile') }}" >
+                        Modificar Perfil
+                        </b-dropdown-item>
                         <b-dropdown-item href="#" @click="logout">
                         Cerrar Sesion
                         </b-dropdown-item>
@@ -53,6 +56,6 @@
             @yield('content')
         </main>
     </div>
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ mix('js/app.js') }}" defer></script>
 </body>
 </html>

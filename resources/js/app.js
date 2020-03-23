@@ -22,6 +22,9 @@ require('./components/ContactComponent.vue').default);
 Vue.component('status-component', 
 require('./components/StatusComponent.vue').default);
 
+Vue.component('profile-form-component', 
+require('./components/ProfileComponent.vue').default);
+
 Vue.component('contact-list-component', 
 require('./components/ContactListComponent.vue').default);
 

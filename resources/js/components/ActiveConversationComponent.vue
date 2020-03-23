@@ -59,6 +59,8 @@ export default {
         props: {
             contactId: Number,
             contactName: String,
+            contactImage: String,
+            myImage: String,
             messages: Array
         },
         data(){
